@@ -20,7 +20,7 @@ function CTA() {
           <Button
             size="lg"
             onClick={handleWhatsAppClick}
-            className="bg-white text-orange-500 hover:bg-gray-100 px-10 py-4 text-lg font-semibold"
+            className="cursor-pointer bg-white text-orange-500 hover:bg-gray-100 px-10 py-4 text-lg font-semibold"
           >
             <MessageCircle className="w-5 h-5 mr-2" />
             Chat on WhatsApp
@@ -28,7 +28,7 @@ function CTA() {
           <Button
             size="lg"
             variant="outline"
-            className="border-white text-white hover:bg-white hover:text-orange-500 px-10 py-4 text-lg font-semibold bg-transparent"
+            className="bcursor-pointer order-white text-white hover:bg-white hover:text-orange-500 px-10 py-4 text-lg font-semibold bg-transparent"
           >
             <Phone className="w-5 h-5 mr-2" />
             Call Us Now

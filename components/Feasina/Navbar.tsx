@@ -10,7 +10,7 @@ function Navbar() {
         <div className="text-2xl font-bold text-orange-600">Feasina</div>
         <Button
           onClick={handleWhatsAppClick}
-          className="bg-green-500 hover:bg-green-600 text-white"
+          className="cursor-pointer bg-green-500 hover:bg-green-600 text-white"
         >
           <MessageCircle className="w-4 h-4 mr-2" />
           Contact Us

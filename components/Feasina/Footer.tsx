@@ -50,7 +50,7 @@ function Footer() {
             <div className="space-y-3">
               <Button
                 onClick={handleWhatsAppClick}
-                className="bg-green-500 hover:bg-green-600 text-white w-[50%] justify-start"
+                className="cursor-pointer bg-green-500 hover:bg-green-600 text-white w-[50%] justify-start"
               >
                 <MessageCircle className="w-4 h-4 mr-2" />
                 WhatsApp Us
