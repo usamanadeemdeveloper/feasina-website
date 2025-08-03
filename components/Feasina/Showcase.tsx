@@ -10,7 +10,7 @@ function Showcase() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="relative">
             <Image
-              src="/placeholder.svg?height=400&width=500"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfOqr2rQWERdrlNDdk78QJWMkHNVh42RbEUw&s"
               alt="Feasina Product Range"
               width={500}
               height={400}
