@@ -49,7 +49,7 @@ export const popularFlavors: Flavor[] = [
 export const otherFlavors: Flavor[] = [
   {
     emoji: "🥤",
-    title: "Classic Cola",
+    title: "Vimto Cola",
     description:
       "The timeless fizzy flavor you love, now in instant powder form!",
     bgGradient: "from-gray-800 to-black",

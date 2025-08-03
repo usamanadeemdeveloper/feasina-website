@@ -5,7 +5,7 @@ import { Card, CardContent } from "../ui/card";
 
 function Testimonials() {
   return (
-    <section className="py-16 bg-white">
+    <section id="reviews" className="py-16 bg-white">
       <div className="container mx-auto max-w-6xl px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">

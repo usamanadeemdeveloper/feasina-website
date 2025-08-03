@@ -20,23 +20,27 @@ function Footer() {
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-gray-300">
               <li>
-                <a href="#" className="hover:text-orange-400 transition-colors">
-                  About Us
+                <a
+                  href="#flavours"
+                  className="hover:text-orange-400 transition-colors"
+                >
+                  Our Flavours
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-orange-400 transition-colors">
-                  Our Products
+                <a
+                  href="#benefits"
+                  className="hover:text-orange-400 transition-colors"
+                >
+                  Health Benefits
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-orange-400 transition-colors">
-                  Bulk Orders
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-orange-400 transition-colors">
-                  Contact
+                <a
+                  href="#reviews"
+                  className="hover:text-orange-400 transition-colors"
+                >
+                  Reviews
                 </a>
               </li>
             </ul>
@@ -46,7 +50,7 @@ function Footer() {
             <div className="space-y-3">
               <Button
                 onClick={handleWhatsAppClick}
-                className="bg-green-500 hover:bg-green-600 text-white w-full justify-start"
+                className="bg-green-500 hover:bg-green-600 text-white w-[50%] justify-start"
               >
                 <MessageCircle className="w-4 h-4 mr-2" />
                 WhatsApp Us

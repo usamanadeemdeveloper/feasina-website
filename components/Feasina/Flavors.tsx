@@ -5,7 +5,7 @@ import { FlavorCard } from "./FlavorCard";
 
 export default function Flavors() {
   return (
-    <section className="py-16 bg-gradient-to-br from-yellow-50 via-orange-50 to-red-50">
+    <section id="flavours" className="py-16 bg-gradient-to-br from-yellow-50 via-orange-50 to-red-50">
       <div className="container mx-auto max-w-6xl px-4">
         {/* Title */}
         <div className="text-center mb-16">

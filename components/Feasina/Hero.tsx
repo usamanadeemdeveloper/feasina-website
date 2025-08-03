@@ -50,7 +50,7 @@ function Hero() {
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-blue-400 rounded-3xl blur-3xl opacity-20"></div>
             <Image
-              src="/placeholder.svg?height=500&width=400"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvXfZljDiyUXBIWRdqrsv27kepqaw2fhpNbw&s"
               alt="Feasina Instant Drink"
               width={400}
               height={500}

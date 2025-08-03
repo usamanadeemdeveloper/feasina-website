@@ -4,7 +4,7 @@ import Image from "next/image";
 
 function Benefits() {
   return (
-    <section className="py-16 bg-gradient-to-r from-green-50 to-blue-50">
+    <section id="benefits" className="py-16 bg-gradient-to-r from-green-50 to-blue-50">
       <div className="container mx-auto max-w-6xl px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
@@ -79,10 +79,10 @@ function Benefits() {
             </div>
           </div>
 
-          <div className="relative">
+          <div className="relative lg:mt-32">
             <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-blue-400 rounded-3xl blur-3xl opacity-20"></div>
             <Image
-              src="/placeholder.svg?height=500&width=400"
+              src="/fresh-oranges.jpg"
               alt="Feasina Nutritional Benefits"
               width={400}
               height={500}
