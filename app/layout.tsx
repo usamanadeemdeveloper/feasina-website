@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
+import { Toaster } from "@/components/ui/sonner";
 import "../styles/globals.css";
+
+// Revalidate at most once a minute so stock/availability shown on the
+// homepage doesn't go stale between deploys (page.tsx has a file-level
+// "use server" directive, which forbids non-function exports, so this
+// route-segment config lives here instead).
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Feasina",
@@ -50,7 +57,10 @@ export default function RootLayout({
           }
         `}</style>
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Toaster position="top-center" richColors />
+      </body>
     </html>
   );
 }

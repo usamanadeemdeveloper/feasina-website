@@ -1,0 +1,36 @@
+"use server";
+
+import { createClient } from "@/lib/supabase/server";
+
+export interface PlaceWholesaleOrderInput {
+  items: { productId: string; quantity: number }[];
+  notes?: string;
+}
+
+export type PlaceWholesaleOrderResult =
+  | { ok: true; orderNumber: string; total: number }
+  | { ok: false; error: string };
+
+// Uses the cookie-aware server client (lib/supabase/server.ts), not the
+// bare anon client the retail checkout action uses -- place_wholesale_order()
+// resolves the caller via auth.uid(), which only exists on a request that
+// carries the signed-in session's cookies.
+export async function placeWholesaleOrder(
+  input: PlaceWholesaleOrderInput,
+): Promise<PlaceWholesaleOrderResult> {
+  if (input.items.length === 0) {
+    return { ok: false, error: "Your cart is empty." };
+  }
+
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("place_wholesale_order", {
+    p_items: input.items.map((i) => ({ product_id: i.productId, quantity: i.quantity })),
+    p_notes: input.notes || null,
+  });
+
+  if (error) {
+    return { ok: false, error: error.message };
+  }
+
+  return { ok: true, orderNumber: data.order_number, total: data.total };
+}

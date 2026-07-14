@@ -1,9 +1,12 @@
-"use client";
-
-import { otherFlavors, popularFlavors } from "@/lib/flavorsData";
+import { getStorefrontCatalog } from "@/lib/data/catalog";
+import { getFlavourTheme } from "@/lib/flavor-theme";
 import { FlavorCard } from "./FlavorCard";
 
-export default function Flavors() {
+export default async function Flavors() {
+  const catalog = await getStorefrontCatalog();
+  const bestsellers = catalog.filter((f) => f.isBestseller);
+  const others = catalog.filter((f) => !f.isBestseller);
+
   return (
     <section id="flavours" className="py-16 bg-gradient-to-br from-yellow-50 via-orange-50 to-red-50">
       <div className="container mx-auto max-w-6xl px-4">
@@ -18,29 +21,33 @@ export default function Flavors() {
           </p>
         </div>
 
-        {/* Popular Flavors */}
-        <div className="mb-12">
-          <h3 className="text-2xl font-semibold text-center mb-8 text-gray-800">
-            🌟 Customer Favorites
-          </h3>
-          <div className="grid md:grid-cols-3 gap-8">
-            {popularFlavors.map((f) => (
-              <FlavorCard key={f.title} {...f} />
-            ))}
+        {/* Bestsellers */}
+        {bestsellers.length > 0 && (
+          <div className="mb-12">
+            <h3 className="text-2xl font-semibold text-center mb-8 text-gray-800">
+              🌟 Customer Favorites
+            </h3>
+            <div className="grid md:grid-cols-3 gap-8">
+              {bestsellers.map((flavour) => (
+                <FlavorCard key={flavour.id} flavour={flavour} theme={getFlavourTheme(flavour.slug)} />
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Other Flavors */}
-        <div className="text-center">
-          <h3 className="text-2xl font-semibold mb-8 text-gray-800">
-            More Exciting Options
-          </h3>
-          <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-            {otherFlavors.map((f) => (
-              <FlavorCard key={f.title} {...f} />
-            ))}
+        {others.length > 0 && (
+          <div className="text-center">
+            <h3 className="text-2xl font-semibold mb-8 text-gray-800">
+              More Exciting Options
+            </h3>
+            <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+              {others.map((flavour) => (
+                <FlavorCard key={flavour.id} flavour={flavour} theme={getFlavourTheme(flavour.slug)} />
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );
