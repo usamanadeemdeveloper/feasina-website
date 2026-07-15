@@ -5,13 +5,13 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const handleWhatsAppClick = () => {
+export const handleWhatsAppClick = (
+  message = "Hi! I'm interested in learning more about Feasina drinks."
+) => {
   const whatsappNumber = "+923132929709";
-  const whatsappMessage =
-    "Hi! I'm interested in learning more about Feasina drinks.";
 
   const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    whatsappMessage
+    message
   )}`;
   window.open(url, "_blank");
 };

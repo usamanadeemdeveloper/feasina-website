@@ -8,9 +8,18 @@ export const metadata: Metadata = {
 export default function WholesaleLoginPage() {
   return (
     <div className="rounded-xl border bg-white p-8 shadow-sm">
-      <h1 className="mb-1 text-center text-2xl font-bold text-gray-900">Wholesale sign in</h1>
+      <h1 className="mb-1 text-center text-2xl font-bold text-gray-900">Wholesale client login</h1>
       <p className="mb-6 text-center text-sm text-gray-600">
-        For approved wholesale accounts. Contact us if you don&apos;t have access yet.
+        This login is only for approved wholesale clients. Not one yet?{" "}
+        <a
+          href="https://wa.me/923132929709?text=Hi!%20I%27m%20interested%20in%20wholesale%20pricing%20for%20Feasina%20drinks."
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-medium text-orange-600 underline underline-offset-2 hover:text-orange-700"
+        >
+          Contact us on WhatsApp
+        </a>
+        .
       </p>
       <LoginForm />
     </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { handleWhatsAppClick } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { MessageCircle } from "lucide-react";
@@ -43,20 +44,50 @@ function Footer() {
                   Reviews
                 </a>
               </li>
+              <li>
+                <Link
+                  href="/wholesale/login"
+                  className="hover:text-orange-400 transition-colors"
+                >
+                  Login
+                </Link>
+              </li>
             </ul>
           </div>
           <div>
             <h4 className="text-lg font-semibold mb-4">Get in Touch</h4>
             <div className="space-y-3">
               <Button
-                onClick={handleWhatsAppClick}
-                className="cursor-pointer bg-green-500 hover:bg-green-600 text-white w-[50%] justify-start"
+                onClick={() => handleWhatsAppClick()}
+                className="cursor-pointer bg-green-500 hover:bg-green-600 text-white w-full justify-start sm:w-[70%]"
               >
                 <MessageCircle className="w-4 h-4 mr-2" />
                 WhatsApp Us
               </Button>
               <p className="text-gray-300 text-sm">
                 Available 9 AM - 6 PM, Monday to Saturday
+              </p>
+              <p className="text-gray-400 text-sm">
+                Wholesale client?{" "}
+                <button
+                  type="button"
+                  onClick={() =>
+                    handleWhatsAppClick(
+                      "Hi! I'm interested in wholesale pricing for Feasina drinks."
+                    )
+                  }
+                  className="cursor-pointer text-orange-400 underline underline-offset-2 hover:text-orange-300"
+                >
+                  Ask about rates
+                </button>{" "}
+                or{" "}
+                <Link
+                  href="/wholesale/login"
+                  className="text-orange-400 underline underline-offset-2 hover:text-orange-300"
+                >
+                  log in
+                </Link>
+                .
               </p>
             </div>
           </div>

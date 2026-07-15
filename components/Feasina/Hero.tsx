@@ -28,7 +28,7 @@ function Hero() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button
                 size="lg"
-                onClick={handleWhatsAppClick}
+                onClick={() => handleWhatsAppClick()}
                 className="cursor-pointer bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 text-lg"
               >
                 <MessageCircle className="w-5 h-5 mr-2" />
