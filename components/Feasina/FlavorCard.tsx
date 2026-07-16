@@ -102,7 +102,7 @@ export function FlavorCard({
           <DrawerContent>
             <DrawerHeader className="text-center">
               <div
-                className={`mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br ${
+                className={`mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-linear-to-br ${
                   theme.bgGradient
                 } shadow-lg`}
               >
@@ -123,7 +123,7 @@ export function FlavorCard({
           <SheetContent>
             <SheetHeader className="text-center">
               <div
-                className={`mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br ${
+                className={`mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-linear-to-br ${
                   theme.bgGradient
                 } shadow-lg`}
               >
