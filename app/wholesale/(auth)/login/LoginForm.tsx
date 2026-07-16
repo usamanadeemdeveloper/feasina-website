@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -17,9 +17,17 @@ const loginSchema = z.object({
 
 type LoginValues = z.infer<typeof loginSchema>;
 
+// Reached via middleware.ts/app/wholesale/(portal)/layout.tsx's redirect
+// when a valid session has no linked clients row -- same case this form
+// already blocks inline on submit below, just surfaced here for whoever
+// lands on this URL directly (e.g. a stale session hitting a portal page).
+const NO_CLIENT_ERROR = "This account doesn't have wholesale access. Contact the owner for a new invite.";
+
 export function LoginForm() {
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const redirectError = searchParams.get("error") === "no_client" ? NO_CLIENT_ERROR : null;
+  const [error, setError] = useState<string | null>(redirectError);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<LoginValues>({
@@ -32,10 +40,24 @@ export function LoginForm() {
     setIsSubmitting(true);
     const supabase = createClient();
     const { error: signInError } = await supabase.auth.signInWithPassword(values);
-    setIsSubmitting(false);
 
     if (signInError) {
+      setIsSubmitting(false);
       setError("Incorrect email or password.");
+      return;
+    }
+
+    // The auth account can outlive its wholesale client record (e.g. the
+    // client was removed but their login was never revoked) --
+    // clients_self_select (0006_rls.sql) already scopes this to just the
+    // signed-in user's own row, so an empty result means there's no linked
+    // wholesale client, not a permissions issue.
+    const { data: client } = await supabase.from("clients").select("id").maybeSingle();
+    setIsSubmitting(false);
+
+    if (!client) {
+      await supabase.auth.signOut();
+      setError("This account doesn't have wholesale access. Contact the owner for a new invite.");
       return;
     }
 

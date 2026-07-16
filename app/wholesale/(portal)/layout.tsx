@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
 import { BrandBackground } from "../BrandBackground";
 import { SignOutButton } from "./SignOutButton";
 import { BottomNav } from "./BottomNav";
@@ -10,7 +12,19 @@ const DESKTOP_NAV_LINKS = [
   { href: "/wholesale/statement", label: "Statement" },
 ];
 
-export default function WholesaleLayout({ children }: { children: React.ReactNode }) {
+export default async function WholesaleLayout({ children }: { children: React.ReactNode }) {
+  // A Supabase Auth session can outlive its wholesale client record (e.g.
+  // the client was removed from the catalog/CRM but their login was never
+  // revoked -- see middleware.ts and LoginForm.tsx, which cover the same
+  // case at sign-in). clients_self_select (0006_rls.sql) already denies
+  // this account any client data at the DB level, but bounce it out of the
+  // portal entirely rather than render an empty shell.
+  const supabase = await createClient();
+  const { data: client } = await supabase.from("clients").select("id").maybeSingle();
+  if (!client) {
+    redirect("/wholesale/login?error=no_client");
+  }
+
   return (
     <div className="relative min-h-screen">
       {/* Solid bg-white on header/BottomNav (not translucent) so the fruit

@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { LoginForm } from "./LoginForm";
 
 export const metadata: Metadata = {
   title: "Wholesale sign in — Feasina",
 };
 
+// LoginForm reads ?error= via useSearchParams(), which requires a Suspense
+// boundary here or this route can't be statically prerendered -- same fix
+// feasina-admin's app/(auth)/login/page.tsx needed.
 export default function WholesaleLoginPage() {
   return (
     <div className="rounded-xl border bg-white p-8 shadow-sm">
@@ -21,7 +25,9 @@ export default function WholesaleLoginPage() {
         </a>
         .
       </p>
-      <LoginForm />
+      <Suspense fallback={null}>
+        <LoginForm />
+      </Suspense>
     </div>
   );
 }

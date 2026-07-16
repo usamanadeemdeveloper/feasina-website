@@ -49,9 +49,22 @@ export async function middleware(request: NextRequest) {
   }
 
   if (user && request.nextUrl.pathname.startsWith("/wholesale/login")) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/wholesale";
-    return NextResponse.redirect(url);
+    // Defense in depth: app/wholesale/(portal)/layout.tsx already blocks a
+    // session with no linked clients row from ever reaching the portal, but
+    // redirecting straight to /wholesale without checking here would just
+    // bounce right back to /wholesale/login via that layout -- an infinite
+    // loop. Verify the client row exists before redirecting, and sign out
+    // instead of looping if it's missing. Mirrors feasina-admin's
+    // lib/supabase/middleware.ts.
+    const { data: client } = await supabase.from("clients").select("id").maybeSingle();
+
+    if (client) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/wholesale";
+      return NextResponse.redirect(url);
+    }
+
+    await supabase.auth.signOut();
   }
 
   return supabaseResponse;
