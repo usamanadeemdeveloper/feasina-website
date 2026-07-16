@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 
 export interface PlaceWholesaleOrderInput {
@@ -31,6 +32,12 @@ export async function placeWholesaleOrder(
   if (error) {
     return { ok: false, error: error.message };
   }
+
+  // The dashboard's "Recent orders" list (app/wholesale/(portal)/page.tsx)
+  // is server-fetched and cached by the router -- without this, navigating
+  // back there via router.push (or the bottom nav, or browser back) would
+  // show stale data missing the order just placed.
+  revalidatePath("/wholesale");
 
   return { ok: true, orderNumber: data.order_number, total: data.total };
 }
