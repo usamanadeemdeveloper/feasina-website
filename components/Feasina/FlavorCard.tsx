@@ -100,10 +100,19 @@ export function FlavorCard({
       {isMobile ? (
         <Drawer open={open} onOpenChange={setOpen}>
           <DrawerContent>
-            <DrawerHeader>
-              <DrawerTitle>{flavour.name}</DrawerTitle>
-              <DrawerDescription>
-                Choose a pack size and quantity
+            <DrawerHeader className="text-center">
+              <div
+                className={`mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br ${
+                  theme.bgGradient
+                } shadow-lg`}
+              >
+                <span className="text-4xl">{theme.emoji}</span>
+              </div>
+
+              <DrawerTitle className="text-2xl">{flavour.name}</DrawerTitle>
+
+              <DrawerDescription className="mx-auto max-w-sm text-base leading-relaxed">
+                {flavour.description}
               </DrawerDescription>
             </DrawerHeader>
             <PackPicker flavour={flavour} onDone={() => setOpen(false)} />
@@ -112,10 +121,19 @@ export function FlavorCard({
       ) : (
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetContent>
-            <SheetHeader>
-              <SheetTitle>{flavour.name}</SheetTitle>
-              <SheetDescription>
-                Choose a pack size and quantity
+            <SheetHeader className="text-center">
+              <div
+                className={`mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br ${
+                  theme.bgGradient
+                } shadow-lg`}
+              >
+                <span className="text-4xl">{theme.emoji}</span>
+              </div>
+
+              <SheetTitle className="text-2xl">{flavour.name}</SheetTitle>
+
+              <SheetDescription className="mx-auto max-w-sm text-base leading-relaxed">
+                {flavour.description}
               </SheetDescription>
             </SheetHeader>
             <PackPicker flavour={flavour} onDone={() => setOpen(false)} />
