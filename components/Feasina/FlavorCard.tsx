@@ -1,10 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import { ShoppingCart } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "../ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "../ui/sheet";
 import {
   Drawer,
   DrawerContent,
@@ -16,7 +23,10 @@ import { PackPicker } from "./PackPicker";
 import type { StorefrontFlavour } from "@/lib/data/catalog";
 import type { FlavourTheme } from "@/lib/flavor-theme";
 
-const BADGE_STYLE: Record<NonNullable<StorefrontFlavour["badge"]>["tone"], string> = {
+const BADGE_STYLE: Record<
+  NonNullable<StorefrontFlavour["badge"]>["tone"],
+  string
+> = {
   bestseller: "bg-white/20",
   "coming-soon": "bg-blue-100 text-blue-700",
   "out-of-stock": "bg-red-100 text-red-600",
@@ -31,46 +41,55 @@ export function FlavorCard({
 }) {
   const [open, setOpen] = useState(false);
   const isMobile = useIsMobile();
-  const heightClass = flavour.isBestseller ? "h-80" : "";
   const canOrder = flavour.packs.some((p) => p.inStock);
 
   const card = (
     <Card
       className={`
-        border-0
-        shadow-xl hover:shadow-2xl transition-all duration-300
-        hover:-translate-y-2
-        ${theme.borderStyle ?? ""}
-        ${theme.bgGradient.startsWith("from-") ? `bg-gradient-to-br ${theme.bgGradient}` : theme.bgGradient}
-      `}
+    relative
+    h-full
+    cursor-pointer
+    border-0
+    shadow-xl transition-all duration-300
+    hover:-translate-y-2 hover:shadow-2xl
+    ${theme.borderStyle ?? ""}
+    ${theme.bgGradient.startsWith("from-") ? `bg-linear-to-br ${theme.bgGradient}` : theme.bgGradient}
+  `}
     >
+      <Button
+        type="button"
+        variant="ghost"
+        size="icon"
+        disabled={!canOrder}
+        aria-label={
+          canOrder
+            ? `Add ${flavour.name} to cart`
+            : `${flavour.name} unavailable`
+        }
+        onClick={() => setOpen(true)}
+        className={`absolute top-4 right-4 cursor-pointer rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm disabled:cursor-not-allowed disabled:opacity-50 ${theme.textColor}`}
+      >
+        <ShoppingCart className="size-5" />
+      </Button>
       <CardContent
-        className={`p-8 text-center ${theme.textColor} ${heightClass} flex flex-col justify-between`}
+        className={`p-8 text-center ${theme.textColor} flex h-full flex-col justify-between`}
       >
         <div>
           <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6 backdrop-blur-sm">
             <span className="text-4xl">{theme.emoji}</span>
           </div>
           <h3 className="text-2xl font-bold mb-4">{flavour.name}</h3>
-          <p className="leading-relaxed mb-4">{flavour.description}</p>
+          <p className="line-clamp-2 leading-relaxed mb-4">
+            {flavour.description}
+          </p>
         </div>
-        <div className="space-y-3">
-          {flavour.badge && (
-            <div
-              className={`rounded-full px-4 py-2 text-sm font-semibold backdrop-blur-sm ${BADGE_STYLE[flavour.badge.tone]}`}
-            >
-              {flavour.badge.text}
-            </div>
-          )}
-          <Button
-            type="button"
-            disabled={!canOrder}
-            onClick={() => setOpen(true)}
-            className="w-full cursor-pointer bg-white/20 hover:bg-white/30 backdrop-blur-sm disabled:cursor-not-allowed"
+        {flavour.badge && (
+          <div
+            className={`rounded-full px-4 py-2 text-sm font-semibold backdrop-blur-sm ${BADGE_STYLE[flavour.badge.tone]}`}
           >
-            {canOrder ? "Add to Cart" : "Unavailable"}
-          </Button>
-        </div>
+            {flavour.badge.text}
+          </div>
+        )}
       </CardContent>
     </Card>
   );
@@ -83,7 +102,9 @@ export function FlavorCard({
           <DrawerContent>
             <DrawerHeader>
               <DrawerTitle>{flavour.name}</DrawerTitle>
-              <DrawerDescription>Choose a pack size and quantity</DrawerDescription>
+              <DrawerDescription>
+                Choose a pack size and quantity
+              </DrawerDescription>
             </DrawerHeader>
             <PackPicker flavour={flavour} onDone={() => setOpen(false)} />
           </DrawerContent>
@@ -93,7 +114,9 @@ export function FlavorCard({
           <SheetContent>
             <SheetHeader>
               <SheetTitle>{flavour.name}</SheetTitle>
-              <SheetDescription>Choose a pack size and quantity</SheetDescription>
+              <SheetDescription>
+                Choose a pack size and quantity
+              </SheetDescription>
             </SheetHeader>
             <PackPicker flavour={flavour} onDone={() => setOpen(false)} />
           </SheetContent>
